@@ -1,0 +1,33 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>BackgroundJS</title>
+
+<p>
+  <input id="Start" type="button" value="Crunch some numbers">
+  <span id="Working"></span>
+</p>
+<pre id="Results"></pre>
+
+<script src="../dist/background.min.js"></script>
+
+<script>
+
+function crunchNumbers(x){
+  var startTime = new Date();
+  for(var i = 0; i < x; i++){
+    Math.sqrt(Math.random() * 1000000000);
+  }
+  var totalTime = new Date() - startTime;
+  return totalTime;
+}
+
+var crunchInBackground = toBackground(crunchNumbers);
+
+document.getElementById('Start').onclick = function(){
+  crunchInBackground(5000000000, function(time){
+    var msg = '[' + new Date() + '] Done! Time taken: ' + time + 's\n';
+    document.getElementById('Results').innerHTML += msg;
+  });
+};
+
+</script>

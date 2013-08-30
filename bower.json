@@ -1,0 +1,19 @@
+{
+  "name": "BackgroundJS",
+  "version": "0.0.0",
+  "authors": [
+    "Peter Kröner <peter@peterkroener.de>"
+  ],
+  "description": "Easy-to-use background functions",
+  "main": "dist/background.min.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "devDependencies": {
+    "qunit": "~1.12.0"
+  }
+}
