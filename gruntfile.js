@@ -8,7 +8,7 @@ pkg: grunt.file.readJSON('package.json'),
 uglify: {
   all: {
     files: {
-      'dist/background.min.js': 'src/background.js'
+      'dist/unsync.min.js': 'src/unsync.js'
     }
   }
 },

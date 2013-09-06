@@ -1,8 +1,11 @@
-BackgroundJS
-============
+Unsync
+======
 
-Easy-to-use background functions. Allows asynchronous execution of blocking
-functions.
+Allows asynchronous execution of blocking functions, provided they are pure
+functions. Pure functions must not have any side effects and can do nothing
+but work with their arguments and return a value.
+
+Simple Example:
 
     function crunchNumbers(x){
       var startTime = new Date();
@@ -13,9 +16,9 @@ functions.
       return totalTime;
     }
 
-    var crunchInBackground = toBackground(crunchNumbers);
+    var crunchAsync = unsync(crunchNumbers);
 
-    crunchInBackground(5000000000, function(time){
+    crunchAsync(5000000000, function(time){
       var msg = '[' + new Date() + '] Done! Time taken: ' + time + 's';
       window.alert(msg);
     });
