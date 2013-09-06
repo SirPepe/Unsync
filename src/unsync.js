@@ -20,10 +20,10 @@ unsync.createBlobTemplate = function(code){
 };
 
 unsync.createWorker = function(code){
-  var workerBlob = new Blob([code], { type: 'text/javascript' });
-  var workerUrl = window.URL.createObjectURL(workerBlob);
-  var worker = new Worker(workerUrl);
-  worker.__url__ = workerUrl;
+  var blob = new Blob([code], { type: 'text/javascript' });
+  var url = window.URL.createObjectURL(blob);
+  var worker = new Worker(url);
+  window.URL.revokeObjectURL(url);
   return worker;
 };
 
@@ -40,7 +40,6 @@ unsync.createBackgroundFunction = function(worker){
   };
   func.close = function(){
     worker.terminate();
-    window.URL.revokeObjectURL(url);
     terminated = true;
   };
   return func;
