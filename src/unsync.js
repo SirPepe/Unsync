@@ -38,6 +38,12 @@ unsync.createBackgroundFunction = function(worker){
       if(typeof done === 'function') done.call(null, evt.data);
     };
   };
+  Object.defineProperty(func, 'terminated', {
+    enumerable: true,
+    get: function(){
+      return terminated;
+    }
+  });
   func.close = function(){
     worker.terminate();
     terminated = true;
