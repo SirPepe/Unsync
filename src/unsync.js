@@ -44,8 +44,9 @@ unsync.createAsyncFunction = function(worker, autoTerminate){
     var args = slice(arguments, 0, -1);
     var done = arguments[arguments.length -1];
     worker.postMessage(args);
-    worker.addEventListener('message', function(evt){
+    worker.addEventListener('message', function callback(evt){
       done.call(null, evt.data);
+      worker.removeEventListener('message', callback);
       if(autoTerminate) func.terminate();
     }, false);
   };
