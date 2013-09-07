@@ -12,6 +12,7 @@
 
 <script>
 
+// A pure, blocking function without side effects
 function crunchNumbers(x){
   var startTime = new Date();
   for(var i = 0; i < x; i++){
@@ -21,13 +22,21 @@ function crunchNumbers(x){
   return totalTime;
 }
 
+// Async version of the function above
 var crunchAsync = unsync(crunchNumbers);
 
 document.getElementById('Start').onclick = function(){
-  crunchAsync(5000000000, function(time){
+
+  // Callback for the async function. First argument is the value returned by
+  // the original function
+  var done = function(time){
     var msg = '[' + new Date() + '] Done! Time taken: ' + time + 's\n';
     document.getElementById('Results').innerHTML += msg;
-  });
+  };
+
+  // Call the async function with its arguments and a callback
+  crunchAsync(5000000000, done);
+
 };
 
 </script>
