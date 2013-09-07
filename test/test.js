@@ -69,4 +69,34 @@ asyncTest('Equivalence (2 arguments)', 1, function(){
 });
 
 
+module('Worker termination');
+
+
+asyncTest('Manual termination / termination state', 3, function(){
+  var thisShouldBeFalse = false;
+  var testFn = function(){ return; };
+  var unsynced = unsync(testFn);
+  strictEqual(unsynced.terminated, false);
+  unsynced(function(){
+    thisShouldBeFalse = true; // Should not happen because of early termination
+  });
+  setTimeout(function(){
+    strictEqual(thisShouldBeFalse, false);
+    start();
+  }, 1000);
+  unsynced.terminate();
+  strictEqual(unsynced.terminated, true);
+});
+
+
+asyncTest('Automatic termination', 1, function(){
+  var testFn = function(){ return; };
+  var unsynced = unsync(testFn, true);
+  unsynced(function(){
+    strictEqual(unsynced.terminated, true);
+    start();
+  });
+});
+
+
 })();
