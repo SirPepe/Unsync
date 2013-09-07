@@ -2,14 +2,14 @@ window.unsync = (function(){
 
 var slice = Function.prototype.call.bind(Array.prototype.slice);
 
-function unsync(sourceFunc){
+function unsync(sourceFunc, autoTerminate){
   if(typeof sourceFunc !== 'function'){
     throw new Error('Expected function, got ' + typeof sourceFunc);
   }
   var sourceCode = unsync.createBlobTemplate(sourceFunc.toString());
   var worker = unsync.createWorker(sourceCode);
-  var backgroundFunction = unsync.createBackgroundFunction(worker);
-  return backgroundFunction;
+  var func = unsync.createAsyncFunction(worker, autoTerminate);
+  return func;
 }
 
 unsync.createBlobTemplate = function(code){
@@ -27,16 +27,17 @@ unsync.createWorker = function(code){
   return worker;
 };
 
-unsync.createBackgroundFunction = function(worker){
+unsync.createAsyncFunction = function(worker, autoTerminate){
   var terminated = false;
-  var func = function(){
+  var func = function func(){
     if(terminated) throw new Error('Background process was already terminated');
     var args = slice(arguments, 0, -1);
     var done = arguments[arguments.length -1];
     worker.postMessage(args);
-    worker.onmessage = function(evt){
-      if(typeof done === 'function') done.call(null, evt.data);
-    };
+    worker.addEventListener('message', function(evt){
+      done.call(null, evt.data);
+      if(autoTerminate) func.terminate();
+    }, false);
   };
   Object.defineProperty(func, 'terminated', {
     enumerable: true,
@@ -44,7 +45,7 @@ unsync.createBackgroundFunction = function(worker){
       return terminated;
     }
   });
-  func.close = function(){
+  func.terminate = function(){
     worker.terminate();
     terminated = true;
   };
