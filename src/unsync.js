@@ -8,7 +8,7 @@ function unsync(sourceFunc, autoTerminate){
   }
   var sourceCode = unsync.createBlobTemplate(sourceFunc.toString());
   var worker = unsync.createWorker(sourceCode);
-  var func = unsync.createAsyncFunction(worker, autoTerminate);
+  var func = unsync.createAsyncFunction(worker, Boolean(autoTerminate));
   return func;
 }
 
