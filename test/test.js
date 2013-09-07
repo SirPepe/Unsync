@@ -5,7 +5,6 @@
 
 module('API');
 
-
 test('Properties', function(){
   ok(typeof window.unsync == 'function');
   ok(typeof window.unsync.supported == 'boolean');
@@ -15,7 +14,6 @@ test('Properties', function(){
   ok(typeof window.unsync.createAsyncFunction == 'function');
 });
 
-
 test('unsync.createBlobTemplate()', function(){
   var source = 'function(q){return q;}';
   var template = unsync.createBlobTemplate(source);
@@ -23,12 +21,9 @@ test('unsync.createBlobTemplate()', function(){
       'embeds source code into the template');
 });
 
-
 //test('unsync.createWorker()', function(){});
 
-
 //test('unsync.createAsyncFunction()', function(){});
-
 
 test('unsync()', function(){
   throws(function(){
@@ -41,7 +36,6 @@ test('unsync()', function(){
 
 module('Unsynced functions');
 
-
 asyncTest('Equivalence (0 arguments)', 1, function(){
   var testFn = function(){ return 42; };
   unsync(testFn)(function(result){
@@ -50,7 +44,6 @@ asyncTest('Equivalence (0 arguments)', 1, function(){
   });
 });
 
-
 asyncTest('Equivalence (1 argument)', 1, function(){
   var testFn = function(x){ return x * x; };
   unsync(testFn)(2, function(result){
@@ -58,7 +51,6 @@ asyncTest('Equivalence (1 argument)', 1, function(){
     start();
   });
 });
-
 
 asyncTest('Equivalence (2 arguments)', 1, function(){
   var testFn = function(x, y){ return x + y; };
@@ -70,7 +62,6 @@ asyncTest('Equivalence (2 arguments)', 1, function(){
 
 
 module('Worker termination');
-
 
 asyncTest('Manual termination / termination state', 3, function(){
   var thisShouldBeFalse = false;
@@ -88,7 +79,6 @@ asyncTest('Manual termination / termination state', 3, function(){
   strictEqual(unsynced.terminated, true);
 });
 
-
 asyncTest('Automatic termination', 1, function(){
   var testFn = function(){ return; };
   var unsynced = unsync(testFn, true);
@@ -97,6 +87,5 @@ asyncTest('Automatic termination', 1, function(){
     start();
   });
 });
-
 
 })();
