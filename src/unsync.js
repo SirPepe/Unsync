@@ -42,9 +42,9 @@ unsync.createWorker = function(code){
 };
 
 unsync.createAsyncFunction = function(worker, autoTerminate){
-  var terminated = false;
+  var isTerminated = false;
   var func = function func(){
-    if(terminated) throw new Error('Background process was already terminated');
+    if(isTerminated) throw new Error('Background process was already terminated');
     var done = (arguments.length > 0) ? arguments[arguments.length -1] : null;
     var args = (arguments.length > 1) ? slice(arguments, 0, -1) : [];
     worker.postMessage(args);
@@ -54,15 +54,15 @@ unsync.createAsyncFunction = function(worker, autoTerminate){
       if(done) done.call(null, evt.data);
     }, false);
   };
-  Object.defineProperty(func, 'terminated', {
+  Object.defineProperty(func, 'isTerminated', {
     enumerable: true,
     get: function(){
-      return terminated;
+      return isTerminated;
     }
   });
   func.terminate = function(){
     worker.terminate();
-    terminated = true;
+    isTerminated = true;
   };
   return func;
 };

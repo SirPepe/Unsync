@@ -63,27 +63,30 @@ asyncTest('Equivalence (2 arguments)', 1, function(){
 
 module('Worker termination');
 
-asyncTest('Manual termination / termination state', 3, function(){
+asyncTest('Manual termination / termination state', 4, function(){
   var thisShouldBeFalse = false;
   var testFn = function(){ return; };
   var unsynced = unsync(testFn);
-  strictEqual(unsynced.terminated, false);
+  strictEqual(unsynced.isTerminated, false);
   unsynced(function(){
     thisShouldBeFalse = true; // Should not happen because of early termination
   });
   setTimeout(function(){
     strictEqual(thisShouldBeFalse, false);
     start();
-  }, 1000);
+  }, 500);
   unsynced.terminate();
-  strictEqual(unsynced.terminated, true);
+  strictEqual(unsynced.isTerminated, true);
+  throws(function(){
+    unsynced(function(){});
+  }, 'throws when calling a terminated process');
 });
 
 asyncTest('Automatic termination', 1, function(){
   var testFn = function(){ return; };
   var unsynced = unsync(testFn, true);
   unsynced(function(){
-    strictEqual(unsynced.terminated, true);
+    strictEqual(unsynced.isTerminated, true);
     start();
   });
 });
