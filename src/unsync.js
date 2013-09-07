@@ -24,9 +24,9 @@ Object.defineProperty(unsync, 'supported', {
   }
 });
 
-unsync.template = 'this.onmessage = function(evt){ \
-  var result = (#CODE#).apply(null, evt.data); \
-  this.postMessage(result); \
+unsync.template = 'this.onmessage = function(evt){\
+  var result = (#CODE#).apply(null, evt.data);\
+  this.postMessage(result);\
 };';
 
 unsync.createBlobTemplate = function(code){
