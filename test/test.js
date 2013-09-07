@@ -1,8 +1,9 @@
 test('API', function(){
   ok(typeof window.unsync == 'function');
+  ok(typeof window.unsync.supported == 'boolean');
   ok(typeof window.unsync.createBlobTemplate == 'function');
   ok(typeof window.unsync.createWorker == 'function');
-  ok(typeof window.unsync.createBackgroundFunction == 'function');
+  ok(typeof window.unsync.createAsyncFunction == 'function');
 });
 
 
