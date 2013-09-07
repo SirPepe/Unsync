@@ -12,6 +12,16 @@ function unsync(sourceFunc, autoTerminate){
   return func;
 }
 
+Object.defineProperty(unsync, 'supported', {
+  enumerable: true,
+  get: function(){
+    return (
+      typeof window.Worker === 'function' &&
+      typeof window.URL.createObjectURL === 'function'
+    );
+  }
+});
+
 unsync.createBlobTemplate = function(code){
   return 'this.onmessage = function(evt){' +
     '  var result = (' + code + ').apply(null, evt.data);' +
