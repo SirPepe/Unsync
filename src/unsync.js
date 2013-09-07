@@ -22,11 +22,13 @@ Object.defineProperty(unsync, 'supported', {
   }
 });
 
+unsync.template = 'this.onmessage = function(evt){ \
+  var result = (#CODE#).apply(null, evt.data); \
+  this.postMessage(result); \
+};';
+
 unsync.createBlobTemplate = function(code){
-  return 'this.onmessage = function(evt){' +
-    '  var result = (' + code + ').apply(null, evt.data);' +
-    '  this.postMessage(result);' +
-    '};';
+  return this.template.split('#CODE#').join(code);
 };
 
 unsync.createWorker = function(code){

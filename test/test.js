@@ -1,9 +1,18 @@
 test('API', function(){
   ok(typeof window.unsync == 'function');
   ok(typeof window.unsync.supported == 'boolean');
+  ok(typeof window.unsync.template == 'string');
   ok(typeof window.unsync.createBlobTemplate == 'function');
   ok(typeof window.unsync.createWorker == 'function');
   ok(typeof window.unsync.createAsyncFunction == 'function');
+});
+
+
+test('unsync.createBlobTemplate()', function(){
+  var source = 'function(q){return q;}';
+  var template = unsync.createBlobTemplate(source);
+  ok(template.indexOf(source) > 0,
+      'embeds source code into the template');
 });
 
 
