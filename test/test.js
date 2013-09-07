@@ -1,3 +1,8 @@
+(function(){
+
+'use strict';
+
+
 test('API', function(){
   ok(typeof window.unsync == 'function');
   ok(typeof window.unsync.supported == 'boolean');
@@ -32,3 +37,6 @@ test('unsync()', function(){
     'returns a function when given a function');
 
 });
+
+
+})();

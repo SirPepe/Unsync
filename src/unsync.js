@@ -1,5 +1,7 @@
 window.unsync = (function(){
 
+'use strict';
+
 var slice = Function.prototype.call.bind(Array.prototype.slice);
 
 function unsync(sourceFunc, autoTerminate){
