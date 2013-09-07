@@ -4,8 +4,10 @@ Unsync
 Turns synchronous functions into asynchronous functions using
 [Web Workers](http://www.w3.org/TR/workers/). Simple Example:
 
-    var asyncFn = unsync(fn);
-    asyncFn(callback);
+```js
+var asyncFn = unsync(fn);
+asyncFn(callback);
+```
 
 This is useful for blocking functions that run for so long that they block the
 browser's main thread, e.g. some homegrown number crunching algorithm.
@@ -14,28 +16,30 @@ The source function (`fn` in the example) can be any pure function. Pure
 functions must not have any side effects and can do nothing but work with their
 arguments and return a value <sup>1</sup>. A somewhat less simple example:
 
-    // A pure, blocking function without side effects
-    function crunchNumbers(x){
-      var startTime = new Date();
-      for(var i = 0; i < x; i++){
-        Math.sqrt(Math.random() * 1000000000);
-      }
-      var totalTime = new Date() - startTime;
-      return totalTime;
-    }
+```js
+// A pure, blocking function without side effects
+function crunchNumbers(x){
+  var startTime = new Date();
+  for(var i = 0; i < x; i++){
+    Math.sqrt(Math.random() * 1000000000);
+  }
+  var totalTime = new Date() - startTime;
+  return totalTime;
+}
 
-    // Async version of the function above
-    var crunchAsync = unsync(crunchNumbers);
+// Async version of the function above
+var crunchAsync = unsync(crunchNumbers);
 
-    // Callback for the async function. First argument is the value returned by
-    // the original function
-    var done = function(time){
-      var msg = '[' + new Date() + '] Done! Time taken: ' + time + 's\n';
-      document.getElementById('Results').innerHTML += msg;
-    };
+// Callback for the async function. First argument is the value returned by
+// the original function
+var done = function(time){
+  var msg = '[' + new Date() + '] Done! Time taken: ' + time + 's\n';
+  document.getElementById('Results').innerHTML += msg;
+};
 
-    // Call the async function with its arguments and a callback
-    crunchAsync(5000000000, done);
+// Call the async function with its arguments and a callback
+crunchAsync(5000000000, done);
+```
 
 To try this code, open `demo/index.html` in a non-prehistoric browser of your
 choice.
@@ -45,23 +49,23 @@ choice.
 API
 ---
 
-### `unsync(sourceFn [, autoTerminate])`
+### unsync(sourceFn [, autoTerminate])
 
 Returns an asynchronous function that processes the function `sourceFn` in a
 Web Worker. If `autoTerminate` is `true` the Web Worker is terminated after
 the async function is on (default: `false`).
 
-### `unsyncedFn([arguments...], callback)`
+### unsyncedFn([arguments...], callback)
 
 Call a function created by `unsync()` with the arguments required by the source
 function and a callback.
 
-### `unsyncedFn.terminate()`
+### unsyncedFn.terminate()
 
 Terminates the worker behind `unsyncedFn`. The function then can not be used
 again and throws an error when called.
 
-### `unsyncedFn.isTerminated`
+### unsyncedFn.isTerminated
 
 Determines if the worker behind `unsyncedFn` is terminated.
 
