@@ -45,11 +45,11 @@ unsync.createAsyncFunction = function(worker, autoTerminate){
   var terminated = false;
   var func = function func(){
     if(terminated) throw new Error('Background process was already terminated');
-    var args = slice(arguments, 0, -1);
-    var done = arguments[arguments.length -1];
+    var done = (arguments.length > 0) ? arguments[arguments.length -1] : null;
+    var args = (arguments.length > 1) ? slice(arguments, 0, -1) : [];
     worker.postMessage(args);
     worker.addEventListener('message', function callback(evt){
-      done.call(null, evt.data);
+      if(done) done.call(null, evt.data);
       worker.removeEventListener('message', callback);
       if(autoTerminate) func.terminate();
     }, false);
