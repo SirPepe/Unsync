@@ -3,7 +3,10 @@
 'use strict';
 
 
-test('API', function(){
+module('API');
+
+
+test('Properties', function(){
   ok(typeof window.unsync == 'function');
   ok(typeof window.unsync.supported == 'boolean');
   ok(typeof window.unsync.template == 'string');
@@ -21,21 +24,48 @@ test('unsync.createBlobTemplate()', function(){
 });
 
 
-test('unsync.createWorker()', function(){
-});
+//test('unsync.createWorker()', function(){});
 
-test('unsync.createBackgroundFunction()', function(){
-});
+
+//test('unsync.createAsyncFunction()', function(){});
+
 
 test('unsync()', function(){
-
   throws(function(){
     window.unsync(undefined);
   }, 'throws when not called with a function');
-
   ok(typeof window.unsync(function(){}) == 'function',
     'returns a function when given a function');
+});
 
+
+module('Unsynced functions');
+
+
+asyncTest('Equivalence (0 arguments)', 1, function(){
+  var testFn = function(){ return 42; };
+  unsync(testFn)(function(result){
+    strictEqual(result, testFn());
+    start();
+  });
+});
+
+
+asyncTest('Equivalence (1 argument)', 1, function(){
+  var testFn = function(x){ return x * x; };
+  unsync(testFn)(2, function(result){
+    strictEqual(result, testFn(2));
+    start();
+  });
+});
+
+
+asyncTest('Equivalence (2 arguments)', 1, function(){
+  var testFn = function(x, y){ return x + y; };
+  unsync(testFn)(2, 3, function(result){
+    strictEqual(result, testFn(2, 3));
+    start();
+  });
 });
 
 
