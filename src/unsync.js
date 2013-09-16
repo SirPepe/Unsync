@@ -54,16 +54,21 @@ unsync.createAsyncFunction = function(worker, autoTerminate){
       if(done) done.call(null, evt.data);
     }, false);
   };
-  Object.defineProperty(func, 'isTerminated', {
-    enumerable: true,
-    get: function(){
-      return isTerminated;
+  Object.defineProperties(func, {
+    isTerminated: {
+      enumerable: true,
+      get: function(){
+        return isTerminated;
+      }
+    },
+    terminate: {
+      enumerable: true,
+      value: function(){
+        worker.terminate();
+        isTerminated = true;
+      }
     }
   });
-  func.terminate = function(){
-    worker.terminate();
-    isTerminated = true;
-  };
   return func;
 };
 
