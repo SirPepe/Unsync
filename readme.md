@@ -53,7 +53,7 @@ API
 
 Returns an asynchronous function that processes the function `sourceFn` in a
 Web Worker. If `autoTerminate` is `true` the Web Worker is terminated after
-the async function is on (default: `false`).
+the async function is called once (default: `false`).
 
 ### unsyncedFn([arguments...], callback)
 
@@ -61,14 +61,14 @@ Call a function created by `unsync()` with the arguments required by the source
 function and a callback. The callback's arguments are the result computed by the
 source function and a reference to the unsynced function itself.
 
-### unsyncedFn.terminate()
+#### unsyncedFn.terminate()
 
 Terminates the worker behind `unsyncedFn`. The function then can not be used
 again and throws an error when called.
 
-### unsyncedFn.isTerminated
+#### unsyncedFn.isTerminated
 
-Determines if the worker behind `unsyncedFn` is terminated.
+Indicates if the worker behind `unsyncedFn` is terminated.
 
 
 
