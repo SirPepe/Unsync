@@ -58,7 +58,8 @@ the async function is on (default: `false`).
 ### unsyncedFn([arguments...], callback)
 
 Call a function created by `unsync()` with the arguments required by the source
-function and a callback.
+function and a callback. The callback's arguments are the result computed by the
+source function and a reference to the unsynced function itself.
 
 ### unsyncedFn.terminate()
 
