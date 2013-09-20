@@ -7,6 +7,7 @@
 'use strict';
 
 var slice = Function.prototype.call.bind(Array.prototype.slice);
+var URL = window.URL || window.webkitURL;
 
 function unsync(sourceFunc, autoTerminate){
   if(typeof sourceFunc !== 'function'){
@@ -23,7 +24,8 @@ Object.defineProperty(unsync, 'supported', {
   get: function(){
     return (
       typeof window.Worker === 'function' &&
-      typeof window.URL.createObjectURL === 'function'
+      typeof URL === 'object' &&
+      typeof URL.createObjectURL === 'function'
     );
   }
 });
@@ -39,9 +41,9 @@ unsync.createBlobTemplate = function(code){
 
 unsync.createWorker = function(code){
   var blob = new Blob([code], { type: 'text/javascript' });
-  var url = window.URL.createObjectURL(blob);
+  var url = URL.createObjectURL(blob);
   var worker = new Worker(url);
-  window.URL.revokeObjectURL(url);
+  URL.revokeObjectURL(url);
   return worker;
 };
 

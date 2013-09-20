@@ -71,6 +71,17 @@ again and throws an error when called.
 Indicates if the worker behind `unsyncedFn` is terminated.
 
 
+Browser support
+---------------
+
+* Chrome 29+
+* Firefox 24+
+* Safari 6+
+* iOS 6+
+
+Older versions of the browsers above might work too.
+
+
 
 Footnotes
 ---------
