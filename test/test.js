@@ -44,6 +44,15 @@ asyncTest('Equivalence (0 arguments)', 1, function(){
   });
 });
 
+asyncTest('Equivalence (0 arguments, no return value)', 2, function(){
+  var testFn = function(){};
+  unsync(testFn)(function(result){
+    strictEqual(result, testFn());
+    strictEqual(result, undefined);
+    start();
+  });
+});
+
 asyncTest('Equivalence (1 argument)', 1, function(){
   var testFn = function(x){ return x * x; };
   unsync(testFn)(2, function(result){
@@ -56,6 +65,18 @@ asyncTest('Equivalence (2 arguments)', 1, function(){
   var testFn = function(x, y){ return x + y; };
   unsync(testFn)(2, 3, function(result){
     strictEqual(result, testFn(2, 3));
+    start();
+  });
+});
+
+asyncTest('Equivalence (variable arguments)', 1, function(){
+  var testFn = function(){
+    return [].reduce.call(arguments, function(a, b){
+      return a + b;
+    });
+  };
+  unsync(testFn)(42, 1337, 9001, function(result){
+    strictEqual(result, testFn(42, 1337, 9001));
     start();
   });
 });
@@ -97,11 +118,14 @@ asyncTest('Manual termination / termination state', 4, function(){
   }, 'throws when calling a terminated process');
 });
 
-asyncTest('Automatic termination', 1, function(){
+asyncTest('Automatic termination', 2, function(){
   var testFn = function(){ return; };
   var unsynced = unsync(testFn, true);
   unsynced(function(){
     strictEqual(unsynced.isTerminated, true);
+    throws(function(){
+      unsynced(function(){});
+    }, 'throws when calling a terminated process');
     start();
   });
 });
