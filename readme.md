@@ -79,7 +79,8 @@ Browser support
 * Safari 6+
 * iOS 6+
 
-Older versions of the browsers above might work too.
+Older versions of the browsers above might work too and it's probably not
+all that impossible to get IE 10 to work (see issue #1).
 
 
 
