@@ -22,8 +22,16 @@ Object.defineProperty(unsync, 'supported', {
   get: function(){
     return (
       typeof window.Worker === 'function' &&
-      typeof URL === 'object' &&
-      typeof URL.createObjectURL === 'function'
+      typeof URL === 'function' &&
+      typeof URL.createObjectURL === 'function' &&
+      (function(){
+        try {
+          unsync.createWorker(';');
+        } catch(e){
+          return false;
+        }
+        return true;
+      }())
     );
   }
 });

@@ -25,6 +25,10 @@ test('unsync.createBlobTemplate()', function(){
 
 //test('unsync.createAsyncFunction()', function(){});
 
+test('unsync.supported', function(){
+  ok(window.unsync.supported, 'Unsync is supported by the current browser');
+});
+
 test('unsync()', function(){
   throws(function(){
     window.unsync(undefined);
@@ -32,7 +36,6 @@ test('unsync()', function(){
   ok(typeof window.unsync(function(){}) == 'function',
     'returns a function when given a function');
 });
-
 
 module('Unsynced functions');
 
