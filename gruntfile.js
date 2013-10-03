@@ -4,6 +4,9 @@ grunt.initConfig({
 
 pkg: grunt.file.readJSON('package.json'),
 
+jshint: {
+  all: ['gruntfile.js', 'src/**/*.js', 'test/**/*.js']
+},
 
 uglify: {
   all: {
@@ -17,6 +20,6 @@ uglify: {
 
 grunt.loadNpmTasks('grunt-contrib');
 
-grunt.registerTask('default', ['uglify']);
+grunt.registerTask('default', ['jshint', 'uglify']);
 
 };
