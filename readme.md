@@ -77,11 +77,12 @@ Browser support
 * Chrome 29+
 * Firefox 24+
 * Safari 6+
+* Opera 17+
 * iOS 6+
 
-Older versions of the browsers above might work too. IE 10 and 11 support
-the necessary APIs but <a href="https://connect.microsoft.com/IE/feedback/details/801810/web-workers-from-blob-urls-in-ie-10-and-11">a
-bug prevents them from working together</a> (see issue #1).
+Older versions of the browsers above might work too. The Android stock browser
+doesn't support Web Workers. IE 10 and 11 support the necessary APIs but
+<a href="https://connect.microsoft.com/IE/feedback/details/801810/web-workers-from-blob-urls-in-ie-10-and-11">a bug prevents them from working together</a> (see issue #1).
 
 
 
