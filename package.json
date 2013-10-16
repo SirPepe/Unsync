@@ -1,7 +1,7 @@
 {
   "name": "Unsync",
-  "description": "Easy-to-use background functions",
-  "version": "0.0.0",
+  "description": "Turns synchronous functions into asynchronous functions using Web Workers",
+  "version": "0.0.1",
   "author": {
     "name": "Peter Kröner",
     "email": "peter@peterkroener.de"

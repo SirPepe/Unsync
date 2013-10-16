@@ -1,10 +1,10 @@
 {
   "name": "Unsync",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "authors": [
     "Peter Kröner <peter@peterkroener.de>"
   ],
-  "description": "Easy-to-use background functions",
+  "description": "Turns synchronous functions into asynchronous functions using Web Workers",
   "main": "dist/background.min.js",
   "license": "MIT",
   "ignore": [
