@@ -54,6 +54,14 @@ unsync.createWorker = function(code){
   return worker;
 };
 
+unsync.createMessageHandler = function(unsyncedFn, done, autoTerminate){
+  return function callback(evt){
+    this.removeEventListener('message', callback);
+    if(autoTerminate) unsyncedFn.terminate();
+    if(done) done.call(null, evt.data, unsyncedFn);
+  };
+};
+
 unsync.createAsyncFunction = function(worker, autoTerminate){
   var isTerminated = false;
   var fn = function fn(){
@@ -61,11 +69,8 @@ unsync.createAsyncFunction = function(worker, autoTerminate){
     var done = (arguments.length > 0) ? arguments[arguments.length -1] : null;
     var args = (arguments.length > 1) ? slice(arguments, 0, -1) : [];
     worker.postMessage(args);
-    worker.addEventListener('message', function callback(evt){
-      worker.removeEventListener('message', callback);
-      if(autoTerminate) fn.terminate();
-      if(done) done.call(null, evt.data, fn);
-    }, false);
+    worker.addEventListener('message',
+      unsync.createMessageHandler(fn, done, autoTerminate), false);
   };
   Object.defineProperties(fn, {
     isTerminated: {
