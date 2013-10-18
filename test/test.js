@@ -102,11 +102,10 @@ asyncTest('Loop', 1, function(){
 
 module('Worker termination');
 
-asyncTest('Manual termination / termination state', 4, function(){
+asyncTest('Manual termination', 2, function(){
   var thisShouldBeFalse = false;
   var testFn = function(){ return; };
   var unsynced = unsync(testFn);
-  strictEqual(unsynced.isTerminated, false);
   unsynced(function(){
     thisShouldBeFalse = true; // Should not happen because of early termination
   });
@@ -115,17 +114,15 @@ asyncTest('Manual termination / termination state', 4, function(){
     start();
   }, 500);
   unsynced.terminate();
-  strictEqual(unsynced.isTerminated, true);
   throws(function(){
     unsynced(function(){});
   }, 'throws when calling a terminated process');
 });
 
-asyncTest('Automatic termination', 2, function(){
+asyncTest('Automatic termination', 1, function(){
   var testFn = function(){ return; };
   var unsynced = unsync(testFn, true);
   unsynced(function(){
-    strictEqual(unsynced.isTerminated, true);
     throws(function(){
       unsynced(function(){});
     }, 'throws when calling a terminated process');

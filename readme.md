@@ -66,10 +66,6 @@ source function and a reference to the unsynced function itself.
 Terminates the worker behind `unsyncedFn`. The function then can not be used
 again and throws an error when called.
 
-#### unsyncedFn.isTerminated
-
-Indicates if the worker behind `unsyncedFn` is terminated.
-
 
 Browser support
 ---------------

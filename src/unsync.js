@@ -73,17 +73,11 @@ unsync.createAsyncFunction = function(worker, autoTerminate){
       unsync.createMessageHandler(fn, done, autoTerminate), false);
   };
   Object.defineProperties(fn, {
-    isTerminated: {
-      enumerable: true,
-      get: function(){
-        return isTerminated;
-      }
-    },
     terminate: {
       enumerable: true,
       value: function(){
-        worker.terminate();
         isTerminated = true;
+        return worker.terminate();
       }
     }
   });
