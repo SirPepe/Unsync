@@ -58,7 +58,7 @@ unsync.createMessageHandler = function(unsyncedFn, done, autoTerminate){
   return function callback(evt){
     this.removeEventListener('message', callback);
     if(autoTerminate) unsyncedFn.terminate();
-    if(done) done.call(null, evt.data, unsyncedFn);
+    if(done) done.call(null, evt.data);
   };
 };
 

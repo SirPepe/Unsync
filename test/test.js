@@ -84,20 +84,7 @@ asyncTest('Equivalence (variable arguments)', 1, function(){
   });
 });
 
-asyncTest('Loop', 1, function(){
-  var runs = 0;
-  var testFn = function(x){ return ++x; };
-  unsync(testFn)(0, function callback(result, self){
-    runs++;
-    if(result !== 3){
-      self(result, callback);
-    }
-    else {
-      start();
-      strictEqual(result, runs);
-    }
-  });
-});
+module('Unsync promises');
 
 
 module('Worker termination');
