@@ -25,6 +25,7 @@ Object.defineProperty(unsync, 'supported', {
       typeof window.Worker === 'function' &&
       typeof URL === 'function' &&
       typeof URL.createObjectURL === 'function' &&
+      typeof URL.revokeObjectURL === 'function' &&
       (function(){
         try {
           unsync.createWorker(';');
